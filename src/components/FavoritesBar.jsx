@@ -1,8 +1,10 @@
+//Displays all the cats the user has saved as a favorite
 function FavoritesBar({ favorites, onDetails }) {
   return (
     <section className="favorites">
       <h2>My Favorites</h2>
 
+        {/* Shows a message when the favorites are empty */}
       {favorites.length === 0 ? (
         <p>You haven't saved any favorite cats yet.</p>
       ) : (

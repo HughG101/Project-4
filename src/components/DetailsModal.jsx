@@ -1,6 +1,9 @@
+// Displays an enlarged cat image and detailed information about the breed
 import { useEffect } from "react";
 
 function DetailsModal({ image, onClose }) {
+    
+    // Allows the modal to close when the escape key is pressed 
   useEffect(() => {
     function handleKeyDown(event) {
       if (event.key === "Escape") {
@@ -10,6 +13,7 @@ function DetailsModal({ image, onClose }) {
 
     window.addEventListener("keydown", handleKeyDown);
 
+    //removes the event listener when the modal closes
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
@@ -29,6 +33,8 @@ function DetailsModal({ image, onClose }) {
     >
       <div
         className="modal"
+
+        // Prevents clicking inside the modal from closing it
         onClick={(event) => event.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -51,6 +57,7 @@ function DetailsModal({ image, onClose }) {
           {breed?.name || "Unknown Breed"}
         </h2>
 
+        {/* Displays breed information if the API returns it */}
         {breed ? (
           <div className="breed-details">
             <p>

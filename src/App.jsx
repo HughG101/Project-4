@@ -11,26 +11,30 @@ import Pagination from "./components/Pagination";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 
 function App() {
+  // Stores the breed list and cat images returned from Cat API
   const [breeds, setBreeds] = useState([]);
   const [images, setImages] = useState([]);
 
+  //Stores the search selected breed and current page
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedBreed, setSelectedBreed] = useState("");
-
   const [page, setPage] = useState(0);
 
+  //Controls Loading error and selected image states
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
   const [selectedImage, setSelectedImage] = useState(null);
 
+  //Stores Favorite cats in localStorage so they stay after refreshing page
   const [favorites, setFavorites] = useLocalStorage(
     "favorites",
     []
   );
 
+  //Gets the Cat API key
   const apiKey = import.meta.env.VITE_CAT_API_KEY;
 
+  //Fetches all avaible cat breeds from the CAt API
   async function fetchBreeds() {
     try {
       const response = await fetch(
@@ -53,6 +57,7 @@ function App() {
     }
   }
 
+  //Fetches a page of cat Images and filters by breed if one is selected
   async function fetchImages() {
     setLoading(true);
     setError("");
@@ -87,14 +92,17 @@ function App() {
     }
   }
 
+  // Loads the breed list once when the app is first started
   useEffect(() => {
     fetchBreeds();
   }, []);
 
+  //Loads new images whnever the breed or page changes
   useEffect(() => {
     fetchImages();
   }, [selectedBreed, page]);
 
+  // Searches the breed list using the text entered by the user
   function handleSearch() {
     const search = searchQuery.trim().toLowerCase();
 
@@ -118,12 +126,14 @@ function App() {
     }
   }
 
+  // Changes the selecred breed and returns to the first page
   function handleBreedChange(breedId) {
     setSelectedBreed(breedId);
     setSearchQuery("");
     setPage(0);
   }
 
+  //adds a cat to favroties or removes it if it is already saved
   function toggleFavorite(image) {
     const alreadyFavorite = favorites.some(
       (favorite) => favorite.id === image.id
@@ -140,6 +150,7 @@ function App() {
     }
   }
 
+  //Tries to fetch API data again after an error
   function retryFetch() {
     fetchBreeds();
     fetchImages();
@@ -157,6 +168,7 @@ function App() {
             onSearch={handleSearch}
           />
 
+
           <BreedSelect
             breeds={breeds}
             selectedBreed={selectedBreed}
@@ -169,12 +181,14 @@ function App() {
           onDetails={setSelectedImage}
         />
 
+        {/* Shows loading message while fetching images*/}
         {loading && (
           <p className="status-message">
             Loading cats...
           </p>
         )}
 
+        {/* Shows an error message and retry button if thr API fails*/}
         {error && (
           <div className="error-message">
             <p>{error}</p>
@@ -185,6 +199,7 @@ function App() {
           </div>
         )}
 
+        {/* Shows an empty message if no images were returned*/}
         {!loading &&
           !error &&
           images.length === 0 && (
@@ -193,6 +208,7 @@ function App() {
             </p>
           )}
 
+          {/* Displays the image and pagination when data is available*/}
         {!loading && !error && images.length > 0 && (
           <>
             <ImageGrid
@@ -217,6 +233,7 @@ function App() {
         )}
       </main>
 
+        {/* Opens the details modal when a cat image is selected */}
       {selectedImage && (
         <DetailsModal
           image={selectedImage}

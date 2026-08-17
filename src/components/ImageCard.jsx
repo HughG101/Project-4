@@ -1,5 +1,8 @@
+//Displays one cat image, breed, and favorite button 
 function ImageCard({ image, isFavorite, onFavorite, onDetails }) {
-  const breed = image.breeds?.[0];
+
+    // Uses the first breed attached to the image if breed data exists
+    const breed = image.breeds?.[0];
 
   return (
     <article className="image-card">

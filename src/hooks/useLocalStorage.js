@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+// hook that keeps React state saved in localstorage
 export function useLocalStorage(key, initialValue) {
   const [value, setValue] = useState(() => {
     const storedValue = localStorage.getItem(key);
@@ -11,6 +12,7 @@ export function useLocalStorage(key, initialValue) {
     return initialValue;
   });
 
+  // Saves the updated value whenever the state changes
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(value));
   }, [key, value]);

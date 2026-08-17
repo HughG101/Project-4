@@ -1,5 +1,8 @@
+// Controlled search input used to search for cat breeds
 function SearchBar({ searchQuery, setSearchQuery, onSearch }) {
-  function handleSubmit(event) {
+    function handleSubmit(event) {
+
+        // Prevetns the form from refreshing the entire webpage 
     event.preventDefault();
     onSearch();
   }

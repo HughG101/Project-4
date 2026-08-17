@@ -1,5 +1,6 @@
 import ImageCard from "./ImageCard";
 
+// Creates the grid of cat images 
 function ImageGrid({
   images,
   favorites,
@@ -12,6 +13,8 @@ function ImageGrid({
         <ImageCard
           key={image.id}
           image={image}
+
+          //Checks if the image is already in the favorites
           isFavorite={favorites.some(
             (favorite) => favorite.id === image.id
           )}

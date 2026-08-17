@@ -1,3 +1,4 @@
+// Dsiplays the title and subtitle at the top of the page
 function Banner() {
   return (
     <header className="banner">
